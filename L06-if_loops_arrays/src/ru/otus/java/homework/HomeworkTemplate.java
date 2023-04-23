@@ -7,40 +7,46 @@ import java.util.Scanner;
  */
 public class HomeworkTemplate {
     public static void main(String[] args) {
-        // Переменные для хранения количества правильных и неправильных ответов
-        int correctCount = 0, wrongCount = 0;
-
-        // Ниже вместо null надо написать реализацию,
-        // написано так, чтобы просто компилировалось
-
-        // TODO: Массив вопросов (вместо null надо написать определение массива)
-        String[] questions = null;
-
-        // TODO: Массив вариантов ответов
-        String[][] answerOptions = null;
-
-        // TODO: Массив правильных ответов
-        int[] correctAnswers = null;
-
-        // Примечание - можете придумать как хранить всю информацию в одном массиве
-
         Scanner scanner = new Scanner(System.in);
-        // TODO: Цикл по всем вопросам - исправить, написать правильно
-        for(int i = 0; i < 0; i++) {
-            // TODO: Вывод вопроса на экран
 
-            // TODO: Вывод вариантов ответов на экран
+        // Вопросы и ответы
+        String[] questions = {
+                "Какой язык программирования используется для разработки Android приложений?",
+                "Какой оператор используется для логического 'и' в Java?",
+                "Что такое JDK в Java?",
+                "Какой метод вызывается автоматически при создании объекта в Java?",
+                "Что такое полиморфизм в Java?"
+        };
+        String[][] answers = {
+                {"Java", "Python", "C++", "JavaScript"},
+                {"&&", "||", "!", "&"},
+                {"Java Development Kit", "Java Debugging Kit", "Java Deployment Kit", "Java Documentation Kit"},
+                {"init", "main", "start", "run"},
+                {"Возможность объекта иметь несколько форм", "Возможность объекта иметь несколько цветов", "Возможность объекта иметь несколько размеров", "Возможность объекта иметь несколько имен"}
+        };
+        int[] correctAnswers = {0, 0, 0, 3, 0}; // Индексы правильных ответов на каждый вопрос
 
-            System.out.print("Ваш ответ: ");
-            //TODO: Считываем с консоли ответ пользователя
-
-            //TODO: Проверяем ответ и выводим результат
-            // а также увеличиваем счетчики правильных и неправильных ответов
-
-            System.out.println();
+        // Прохождение теста
+        int correctCount = 0;
+        int incorrectCount = 0;
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println((i + 1) + ". " + questions[i]); // Вывод вопроса
+            for (int j = 0; j < answers[i].length; j++) {
+                System.out.println((j + 1) + ") " + answers[i][j]); // Вывод вариантов ответов
+            }
+            System.out.print("Введите номер ответа: ");
+            int userAnswer = scanner.nextInt(); // Чтение ответа пользователя
+            if (userAnswer - 1 == correctAnswers[i]) { // Сравнение с правильным ответом
+                System.out.println("Правильно!");
+                correctCount++;
+            } else {
+                System.out.println("Неправильно!");
+                incorrectCount++;
+            }
         }
 
-        //Выводим общий результат
-        System.out.println("Результат: правильно " + correctCount + ", неправильно " + wrongCount);
+        // Вывод результатов
+        System.out.println("Количество правильных ответов: " + correctCount);
+        System.out.println("Количество неправильных ответов: " + incorrectCount);
     }
 }
