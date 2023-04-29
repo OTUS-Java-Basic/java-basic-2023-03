@@ -21,7 +21,9 @@ public class StaticDemo {
         counter3.increaseCount();
         System.out.println("5 Counter.getCount() = " + Counter.getCount());
 
-
+        // Константа MAX
+        var maxValue = Counter.MAX;
+        System.out.println(maxValue);
     }
 
 }
