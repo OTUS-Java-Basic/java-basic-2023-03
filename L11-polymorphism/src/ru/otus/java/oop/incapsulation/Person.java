@@ -1,4 +1,4 @@
-package ru.otus.java.oop;
+package ru.otus.java.oop.incapsulation;
 
 public class Person {
     private String name;

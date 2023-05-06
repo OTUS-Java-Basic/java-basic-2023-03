@@ -4,11 +4,11 @@ public class ObjectDemo {
     public static void main(String[] args) {
         Person ivanov1 = new Person("Иванов");
 
-        // Неявно вызывается toString()
+        // В методе println неявно вызывается toString()
         System.out.println(ivanov1);
         // Эквивалентно следующему:
         System.out.println(ivanov1.toString());
-        // Можем переопределить метод в наследнике
+        // Можем переопределить метод toString() в наследнике
 
         Person ivanov2 = new Person("Иванов");
         // == сравнение по равенству ссылок
