@@ -23,23 +23,23 @@ public class PrimitiveWrappers {
 
         // Автоупаковка (autoboxing) / автораспаковка (autounboxing)
 
-        // Автоупаковка
+        // Автоупаковка (autoboxing)
         // primitive -> object (wrapper)
-        Integer d = 10;
-        int e = 20;
-        d = e;
+        Integer objectInt = 10;
+        int primitiveInt = 20;
+        objectInt = primitiveInt;
 
-        // Автораспаковка
+        // Автораспаковка (autounboxing)
         // object (wrapper) -> primitive
-        int f = d;
+        int f = objectInt;
 
         // Вызов метода
         int sum = sum(12, 34);
         System.out.println(sum);
 
-
-        // Примитивом нельзя присвоить null
-//        int f = null;
+        // Примитивам нельзя присвоить null
+        // Ошибка компиляции
+//        int primitiveInt2 = null;
 
         // Оберткам можно
         Integer g = null;
@@ -51,7 +51,7 @@ public class PrimitiveWrappers {
         // примитивы
         long startTimePrimitives = System.currentTimeMillis();
         long sumPrimitives = 0L; // <<< Примитив
-        for (int i = 1; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             sumPrimitives += i;
         }
         long endTimePrimitives = System.currentTimeMillis();
@@ -60,7 +60,7 @@ public class PrimitiveWrappers {
         // обертки
         long startTimeWrappers = System.currentTimeMillis();
         Long sumWrappers = 0L; // <<< Обертка (ссылочный тип)
-        for (Integer i = 1; i < N; i++) {
+        for (Integer i = 1; i <= N; i++) {
             sumWrappers += i;
         }
         long endTimeWrappers = System.currentTimeMillis();

@@ -7,10 +7,16 @@ import static demo.generics.collections.PrintUtils.print;
 public class CollectionDemo {
     public static void main(String[] args) {
         Collection<Integer> collection = createCollection();
+
+        // Метод PrintUtils.print() принимает Iterable<Integer>,
+        // поэтому можем передать туда любую коллекцию.
         PrintUtils.print(collection);
 
         // Так будет ошибка?
-        // Iterable<Integer> collection2 = createCollection();
+//         Iterable<Integer> collection2 = createCollection();
+
+        // А так?
+//         Iterable<String> collection3 = createCollection();
 
         // В Collection появились методы size, add, remove, contains
         System.out.println("size = " + collection.size());

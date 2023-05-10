@@ -6,6 +6,7 @@ import java.util.List;
 
 public class IterableDemo {
     public static void main(String[] args) {
+        // Generics - в коллекции Integer
         Iterable<Integer> items = createItarable();
         Iterator<Integer> iterator = items.iterator();
 
@@ -22,6 +23,7 @@ public class IterableDemo {
         }
 
         // Эквивалентный for с итератором
+        // (так писать не надо)
         System.out.println("--- for with iterator");
         List<Integer> list = createList();
         for (Iterator<Integer> i = list.iterator(); i.hasNext(); ) {
