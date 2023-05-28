@@ -2,36 +2,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 class Bank {
-    private Map<Client, List<Account>> accounts;
+    private Map<Client, List<Account>> clientAccountsMap;
+    private Map<Account, Client> accountClientMap;
 
     public Bank() {
-        accounts = new HashMap<>();
+        clientAccountsMap = new HashMap<>();
+        accountClientMap = new HashMap<>();
     }
 
     public void addClient(Client client) {
-        accounts.put(client, new ArrayList<>());
+        clientAccountsMap.put(client, new ArrayList<>());
     }
 
     public void addAccount(Client client, Account account) {
-        List<Account> clientAccounts = accounts.get(client);
+        List<Account> clientAccounts = clientAccountsMap.get(client);
         if (clientAccounts != null) {
             clientAccounts.add(account);
+            accountClientMap.put(account, client);
         }
     }
 
     public List<Account> getAccounts(Client client) {
-        return accounts.getOrDefault(client, new ArrayList<>());
+        return clientAccountsMap.getOrDefault(client, new ArrayList<>());
     }
 
     public Client findClient(Account account) {
-        for (Map.Entry<Client, List<Account>> entry : accounts.entrySet()) {
-            if (entry.getValue().contains(account)) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        return accountClientMap.get(account);
     }
 }
 
@@ -43,7 +42,6 @@ class Client {
         this.name = name;
         this.age = age;
     }
-
     public String getName() {
         return name;
     }
@@ -58,6 +56,23 @@ class Client {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Client client = (Client) obj;
+        return age == client.age && name.equals(client.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 }
 
@@ -85,41 +100,67 @@ class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Account account = (Account) obj;
+        return accountNumber == account.accountNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber);
+    }
 }
 
 public class AccountBank {
     public static void main(String[] args) {
         Bank bank = new Bank();
 
-        // создаем клиентов в банке
+        // Создание клиентов
         Client client1 = new Client("Андрей", 31);
-        bank.addClient(client1);
-
         Client client2 = new Client("Милена", 24);
+        Client client3 = new Client("Алексей", 40);
+
+        // Добавление в банк
+        bank.addClient(client1);
         bank.addClient(client2);
+        bank.addClient(client3);
 
-        // создаем счета и подвязываем к клиентам
-        Account account1 = new Account(1, 100_000);
+        // Создание счетов
+        Account account1 = new Account(1001, 500_000);
+        Account account2 = new Account(1002, 100_000);
+        Account account3 = new Account(2001, 750_000);
+        Account account4 = new Account(2002, 20_000);
+        Account account5 = new Account(3001, 100_000);
+
+        // Привязка счетов к клиентам
         bank.addAccount(client1, account1);
-
-        Account account2 = new Account(2, 300_000);
         bank.addAccount(client1, account2);
-
-        Account account3 = new Account(3, 200_000);
         bank.addAccount(client2, account3);
+        bank.addAccount(client2, account4);
+        bank.addAccount(client3, account5);
 
+        // Поиск счетов по клиенту
         List<Account> client1Accounts = bank.getAccounts(client1);
-        System.out.println("Счета клиента №1: ");
+        System.out.println("Счета клиента " + client1.getName() + ":");
         for (Account account : client1Accounts) {
-            System.out.println("Номер счета: " + account.getAccountNumber() + ", Баланс счета: " + account.getBalance());
+            System.out.println("Номер счета: " + account.getAccountNumber() + ", Баланс: " + account.getBalance());
         }
 
-        //поиск клиента по его счету
-        Client client = bank.findClient(account3);
-        if (client != null) {
-            System.out.println("Владелец счета №3: " + client.getName() + ", Возраст: " + client.getAge());
+        // Поиск клиента по счету
+        account3 = new Account(2001, 750_000);
+        Client account3Client = bank.findClient(account3);
+        if (account3Client != null) {
+            System.out.println("Клиент, чей счет №" + account3.getAccountNumber() + ": " + account3Client.getName());
         } else {
-            System.out.println("Клиент не найден");
+            System.out.println("Счет " + account3.getAccountNumber() + " не привязан к клиенту.");
         }
     }
 }
