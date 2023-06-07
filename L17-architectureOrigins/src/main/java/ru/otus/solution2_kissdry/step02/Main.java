@@ -105,5 +105,4 @@ public class Main {
         // Добавление расчета в историю
         historyList.add(solvedEquationString);
     }
-
 }
