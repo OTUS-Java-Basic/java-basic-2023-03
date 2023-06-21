@@ -28,13 +28,13 @@
         
         function addStudent() {
             const studentsTab = document.getElementById("studentsTab");
-            let studentName = document.getElementById("studentName").value;
+            const studentName = document.getElementById("studentName").value;
             
             const newRow = studentsTab.insertRow(studentsTab.rows.length);
             
             studentName += "(new)";
             
-            const newCell = newRow.insertCell(-1);
+            newCell = newRow.insertCell(-1);
             newCell.appendChild(document.createTextNode(studentName));
         }
     
