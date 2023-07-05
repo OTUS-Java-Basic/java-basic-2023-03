@@ -1,6 +1,9 @@
 package ru.otus;
 
 
+import ru.otus.game.DiceImplTest;
+import ru.otus.game.GameTest;
+
 public class HomeWork {
 
     /*
@@ -14,7 +17,10 @@ public class HomeWork {
         Информацию о пройденном тесте предлагается выводить в System.out, а об упавшем в System.err
      */
     public static void main(String[] args) {
-
+        new DiceImplTest().testRoll();
+        new GameTest().testPlayGame_Player1Wins();
+        new GameTest().testPlayGame_Player2Wins();
+        new GameTest().testPlayGame_Draw();
     }
-    
+
 }
