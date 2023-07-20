@@ -35,7 +35,7 @@ public class Bank {
         accountsList.add(acc8);
         accountsList.add(acc9);
         accountsList.add(acc10);
-        Map<Account, Client> accountClientMap = createClientAccountMap(accountsList);                                   //Создаю hash-map для дальнейшего использования
+        Map<Client, List<Account>> accountClientMap = createClientAccountMap(clientsList, accountsList);                                   //Создаю hash-map для дальнейшего использования
         Map<Integer, Account> accountsIDMap = createAccountIDMap(accountsList);
         Map<String, Client> nameClientsMap = createNameClientMap(clientsList);
         System.out.println("Поиск в системе банка. Введите номер желаемой функции:");
@@ -51,7 +51,7 @@ public class Bank {
         if (Integer.parseInt(typed) == 1) {
             System.out.println("Введите имя клиента");
             nameOrID = input.nextLine();
-            Set<Account> accountsOfClient = getAccountsOfClient(nameOrID, accountClientMap,nameClientsMap);
+            List<Account> accountsOfClient = getAccountsOfClient(nameOrID, accountClientMap,nameClientsMap);
             assert accountsOfClient != null;
             if (!accountsOfClient.isEmpty()) {
                 System.out.println("ID счетов клиента:");
@@ -81,21 +81,18 @@ public class Bank {
             }
         }
     }
-    public static <Account, Client> Set<Account> getAccountsOfClient (String typed, Map<Account, Client> accountClientMap, Map<String, Client> nameClientsMap) {
-        Set<Account> accountsOfClient = new HashSet<>();                                                                //Получение списка счетов клиента
-        if (nameClientsMap.containsKey(typed)) {
+    public static List<Account> getAccountsOfClient (String typed, Map<Client, List<Account>> accountClientMap, Map<String, Client> nameClientsMap) {
+        List<Account> accountsOfClient = new ArrayList<>();
+        if (nameClientsMap.containsKey(typed)) {                                                                        //Получение списка счетов клиента
             Client client = nameClientsMap.get(typed);
-            for (Map.Entry<Account, Client> entry : accountClientMap.entrySet()) {
-                if (client.equals(entry.getValue())) {
-                    accountsOfClient.add(entry.getKey());
-                }
+            if (accountClientMap.containsKey(client)) {
+                accountsOfClient = accountClientMap.get(client);
             }
-            return accountsOfClient;
         }
         else {
             System.out.println("Имя клиента в базе отсутствует");
-            return null;
         }
+        return accountsOfClient;
     }
     private static Client getClientByAccount (int nameOrID,Map<Integer, Account> accountIDMap) {                           //Получение клиента по счету
         if (accountIDMap.containsKey(nameOrID)) {
@@ -127,10 +124,16 @@ public class Bank {
         }
         return accountsIDMap;
     }
-    private static Map<Account, Client> createClientAccountMap(java.util.List<Account> accountsList) {                  //Создание Map Счет-Клиент
-        Map<Account, Client> accountsMap = new HashMap<>();
-        for (Account account: accountsList){
-            accountsMap.put(account, account.getOwner());
+    private static Map<Client, List<Account>> createClientAccountMap(List<Client> clientList, List<Account> accountList) {
+        Map<Client, List<Account>> accountsMap = new HashMap<>();                                                       //Создание Map Счет-Клиент
+        for (Client client : clientList) {
+            List<Account> clientAccounts = new ArrayList<>();
+            for (Account account : accountList) {
+                if (client.equals(account.getOwner())) {
+                    clientAccounts.add(account);
+                }
+            }
+            accountsMap.put(client, clientAccounts);
         }
         return accountsMap;
     }
