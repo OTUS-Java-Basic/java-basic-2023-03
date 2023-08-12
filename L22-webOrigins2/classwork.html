@@ -1,96 +1,152 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Классная работа</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов</title>
     <style>
-        h1, h2, h3 {
+        h1 {
             color: steelblue;
         }
-        
-        .content-block {
-            width: 800px;
-            margin-left: 20px;
+
+        form {
+
+        border: 1px solid steelblue;
+        width: 650px;
+        border-collapse: collapse;
+        margin-bottom: 30px;
         }
-     
-        .input-form > input{
-            width: 300px;
+
+        label {
+        display: inline-block;
+        width: 120px;
+        font-weight: bold;
         }
-        
-        pre {
-            border: 1px solid steelblue;
-            width: 300px;
-            min-height: 50px;
+
+        input[type="text"],
+        input[type="date"],
+        select {
+        width: 100%;
+        margin-bottom: 10px;
+        border: 1px solid steelblue;
+        box-sizing: border-box;
         }
-    </style>
-    
-    <!--Сюда вствляем скрипт для второго упражнения-->
+
+        button {
+        padding: 10px 20px;
+        background-color: steelblue;
+        color: white;
+        border: none;
+        cursor: pointer;
+        }
+
+        table {
+        border: 1px solid steelblue;
+        width: 650px;
+        border-collapse: collapse;
+        margin-bottom: 300px;
+        }
+
+        th, td {
+        border: 1px solid steelblue;
+        }
+
+</style>
 </head>
-
 <body>
+<h1>Список студентов</h1>
 
-<h2>
-Классная работа
-</h2>
+<form id="studentForm">
+    <label for="name">Имя студента:</label>
+    <input type="text" id="name" name="name" required><br>
 
+    <label for="birthdate">Дата рождения:</label>
+    <input type="date" id="birthdate" name="birthdate" required><br>
 
-<h3>
-    Ситуация:
-</h3>
+    <label for="gender">Пол:</label>
+    <select id="gender" name="gender" required>
+        <option value="мужчина">Мужчина</option>
+        <option value="женщина">Женщина</option>
+    </select><br>
 
-<div class = "content-block">  
-    <p>
-        Закинул старик невод в море...
-    </p>
-</div>
+    <button type="button" onclick="addStudent()">Добавить</button>
+</form>
 
+<table id="studentTable">
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Дата рождения</th>
+        <th>Пол</th>
+        <th>Возраст</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Здесь будут добавляться строки с данными студентов -->
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">Средний возраст студентов</td>
+        <td id="averageAgeCell"></td>
+    </tr>
+    </tfoot>
+</table>
 
-<h3>
-    Форма для ввода:
-</h3>
+<script>
+function calculateAge(birthDate) {
+  const today = new Date();
+  const birthDateObj = new Date(birthDate);
+  const age = Math.floor((today - birthDateObj) / 1000 / 60 / 60 / 24 / 365);
+  return age;
+}
 
-<div class = "input-form"> 
-    <input type = "text" value = "И сидит теперь на берегу без невода!">
-</div>
+function updateAverageAge() {
+  const table = document.getElementById('studentTable');
+  const tbody = table.querySelector('tbody');
+  const rows = tbody.getElementsByTagName('tr');
+  let totalAge = 0;
 
+  for (let i = 0; i < rows.length; i++) {
+    const birthdate = rows[i].cells[1].textContent;
+    totalAge += calculateAge(birthdate);
+  }
 
-<!--Сюда вствляем скрипт для первого упражнения-->
+  const averageAge = Math.ceil(totalAge / rows.length);
+  document.getElementById('averageAgeCell').textContent = averageAge;
+}
 
-<br/><br/><br/>
-<hr/>
+function addStudent() {
+  const name = document.getElementById('name').value;
+  const birthdate = document.getElementById('birthdate').value;
+  const gender = document.getElementById('gender').value;
 
-<h3>
-    Животное:
-</h3>
+  if (name === '' || birthdate === '' || gender === '') {
+    alert('Пожалуйста, заполните все поля.');
+    return;
+  }
 
-<pre id = "animalContainer"></pre>
+  const age = calculateAge(birthdate);
 
-<h3>
-    Котик:
-</h3>
+  const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+  const newRow = table.insertRow(table.rows.length);
 
-<pre id = "kittyContainer"></pre>
+  const nameCell = newRow.insertCell(0);
+  const birthdateCell = newRow.insertCell(1);
+  const genderCell = newRow.insertCell(2);
+  const ageCell = newRow.insertCell(3);
 
+  nameCell.innerHTML = name;
+  birthdateCell.innerHTML = birthdate;
+  genderCell.innerHTML = gender;
+  ageCell.innerHTML = age;
 
+  updateAverageAge();
 
-<!--Тут выполняем для третье упражнение-->
-
-
+  // Очистить поля формы
+  document.getElementById('name').value = '';
+  document.getElementById('birthdate').value = '';
+  document.getElementById('gender').value = '';
+}
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
