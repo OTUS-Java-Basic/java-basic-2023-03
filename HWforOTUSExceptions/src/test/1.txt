@@ -1,8 +1,0 @@
-Конечно, ниже приведен пример с использованием трех способов обработки исключений (вывод ошибки, rethrow и терминирование программы) и конструкции try-with-resources в трех взаимосвязанных классах - Main, FileReader и DataProcessor.
-
-В классе Main создается объект FileReader и вызывается его метод processFile(). FileReader в свою очередь использует объект DataProcessor для обработки данных из файла.
-
-```java
-import java.io.*;
-
-class FileReader {
