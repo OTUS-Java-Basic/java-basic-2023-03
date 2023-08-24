@@ -26,9 +26,6 @@ public class Main {
         }
         while (count > 4);
         digits = breakDownToDigits(value);//разбиваем ввод на отдельные цифры
-        for (int i = 0; i < digits.size(); i++) {
-            System.out.println(digits.get(i).getDigitID()+" "+digits.get(i).getValue());
-        }
         System.out.println(stringAssembly(digits, currency));//собираем вывод из отдельных кусков
 
     }
