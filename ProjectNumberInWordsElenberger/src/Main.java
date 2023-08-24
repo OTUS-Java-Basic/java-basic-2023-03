@@ -10,7 +10,7 @@ public class Main {
         UsedCurrency currency = new UsedCurrency("рубль", "рубля", "рублей");//Задаем название валюты здесь. При смене валюты надо заменить лишь три слова
         int count = 0;
         List<Digit> digits = new ArrayList<>();
-        /*do {
+        do {
             do {
                 do {
                     System.out.println("Введите число:");//запрос числа
@@ -24,14 +24,9 @@ public class Main {
                 System.out.println("Слишком большое число!");
             }
         }
-        while (count > 4);*/
-        for (int i = 0; i < 9999; i++) {
-            value = String.valueOf(i);
-            digits = breakDownToDigits(value);//разбиваем ввод на отдельные цифры
-            System.out.println(stringAssembly(digits, currency));//собираем вывод из отдельных кусков
-        }
-
-
+        while (count > 4);
+        digits = breakDownToDigits(value);//разбиваем ввод на отдельные цифры
+        System.out.println(stringAssembly(digits, currency));//собираем вывод из отдельных кусков
     }
 
 
